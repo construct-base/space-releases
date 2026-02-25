@@ -1,0 +1,72 @@
+name: Rebuild Index
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rebuild index.json from spaces/ directory
+        run: |
+          NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+
+            const spacesDir = 'spaces';
+            const spaces = [];
+
+            if (fs.existsSync(spacesDir)) {
+              for (const name of fs.readdirSync(spacesDir).sort()) {
+                const dir = path.join(spacesDir, name);
+                if (!fs.statSync(dir).isDirectory()) continue;
+
+                // Find the latest tarball
+                const tarballs = fs.readdirSync(dir)
+                  .filter(f => f.endsWith('.tar.gz'))
+                  .sort()
+                  .reverse();
+
+                if (tarballs.length === 0) continue;
+
+                const latest = tarballs[0];
+                const vMatch = latest.match(/v([\d.]+)\.tar\.gz/);
+                const version = vMatch ? vMatch[1] : '0.0.0';
+
+                spaces.push({
+                  id: name,
+                  name: name.charAt(0).toUpperCase() + name.slice(1),
+                  version,
+                  tarball: 'spaces/' + name + '/' + latest,
+                  released_at: fs.statSync(path.join(dir, latest)).mtime.toISOString()
+                });
+              }
+            }
+
+            const idx = {
+              version: 1,
+              updated_at: '${NOW}',
+              spaces
+            };
+
+            fs.writeFileSync('index.json', JSON.stringify(idx, null, 2) + '\n');
+            console.log('Rebuilt index with', spaces.length, 'spaces');
+            console.log(JSON.stringify(idx, null, 2));
+          "
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.json
+          git diff --cached --quiet && echo "No changes" || {
+            git commit -m "chore: rebuild index.json"
+            git push
+          }

@@ -1,0 +1,112 @@
+name: Collect Space Release
+
+on:
+  repository_dispatch:
+    types: [space-release]
+
+# Only one collect at a time to avoid index.json conflicts
+concurrency:
+  group: collect-release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Parse dispatch payload
+        id: meta
+        run: |
+          echo "space=${{ github.event.client_payload.space }}" >> "$GITHUB_OUTPUT"
+          echo "version=${{ github.event.client_payload.version }}" >> "$GITHUB_OUTPUT"
+          echo "repo=${{ github.event.client_payload.repo }}" >> "$GITHUB_OUTPUT"
+          echo "name=${{ github.event.client_payload.display_name }}" >> "$GITHUB_OUTPUT"
+          echo "description=${{ github.event.client_payload.description }}" >> "$GITHUB_OUTPUT"
+          echo "icon=${{ github.event.client_payload.icon }}" >> "$GITHUB_OUTPUT"
+          echo "scope=${{ github.event.client_payload.scope }}" >> "$GITHUB_OUTPUT"
+          echo "tarball_url=${{ github.event.client_payload.tarball_url }}" >> "$GITHUB_OUTPUT"
+
+      - name: Download tarball from source release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SPACE="${{ steps.meta.outputs.space }}"
+          VERSION="${{ steps.meta.outputs.version }}"
+          REPO="${{ steps.meta.outputs.repo }}"
+
+          mkdir -p "spaces/${SPACE}"
+
+          # Download the tarball from the space repo's GitHub Release
+          gh release download "v${VERSION}" \
+            --repo "${REPO}" \
+            --pattern "space-${SPACE}-v${VERSION}.tar.gz" \
+            --dir "spaces/${SPACE}/" \
+            || {
+              echo "::warning::Could not download tarball, trying source archive"
+              gh release download "v${VERSION}" \
+                --repo "${REPO}" \
+                --archive tar.gz \
+                --dir "spaces/${SPACE}/"
+              # Rename to standard format
+              mv "spaces/${SPACE}"/*.tar.gz "spaces/${SPACE}/space-${SPACE}-v${VERSION}.tar.gz" 2>/dev/null || true
+            }
+
+          ls -la "spaces/${SPACE}/"
+
+      - name: Update index.json
+        run: |
+          SPACE="${{ steps.meta.outputs.space }}"
+          VERSION="${{ steps.meta.outputs.version }}"
+          NAME="${{ steps.meta.outputs.name }}"
+          DESC="${{ steps.meta.outputs.description }}"
+          ICON="${{ steps.meta.outputs.icon }}"
+          SCOPE="${{ steps.meta.outputs.scope }}"
+          REPO="${{ steps.meta.outputs.repo }}"
+          NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          # Use node to safely update JSON
+          node -e "
+            const fs = require('fs');
+            const idx = JSON.parse(fs.readFileSync('index.json', 'utf8'));
+
+            idx.updated_at = '${NOW}';
+
+            const existing = idx.spaces.findIndex(s => s.id === '${SPACE}');
+            const entry = {
+              id: '${SPACE}',
+              name: '${NAME}',
+              version: '${VERSION}',
+              description: '${DESC}',
+              icon: '${ICON}',
+              scope: '${SCOPE}',
+              repo: '${REPO}',
+              tarball: 'spaces/${SPACE}/space-${SPACE}-v${VERSION}.tar.gz',
+              released_at: '${NOW}'
+            };
+
+            if (existing >= 0) {
+              idx.spaces[existing] = entry;
+            } else {
+              idx.spaces.push(entry);
+              idx.spaces.sort((a, b) => a.id.localeCompare(b.id));
+            }
+
+            fs.writeFileSync('index.json', JSON.stringify(idx, null, 2) + '\n');
+          "
+
+          cat index.json
+
+      - name: Commit and push
+        run: |
+          SPACE="${{ steps.meta.outputs.space }}"
+          VERSION="${{ steps.meta.outputs.version }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add spaces/ index.json
+          git commit -m "release: ${SPACE} v${VERSION}"
+          git push

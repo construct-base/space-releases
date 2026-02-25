@@ -4,7 +4,7 @@ on:
   repository_dispatch:
     types: [space-release]
 
-# Only one collect at a time to avoid index.json conflicts
+# Only one collect at a time to avoid conflicts
 concurrency:
   group: collect-release
   cancel-in-progress: false
@@ -28,7 +28,6 @@ jobs:
           echo "description=${{ github.event.client_payload.description }}" >> "$GITHUB_OUTPUT"
           echo "icon=${{ github.event.client_payload.icon }}" >> "$GITHUB_OUTPUT"
           echo "scope=${{ github.event.client_payload.scope }}" >> "$GITHUB_OUTPUT"
-          echo "tarball_url=${{ github.event.client_payload.tarball_url }}" >> "$GITHUB_OUTPUT"
 
       - name: Download tarball from source release
         env:
@@ -57,63 +56,80 @@ jobs:
 
           ls -la "spaces/${SPACE}/"
 
-      - name: Update index.json
+      - name: Save space metadata
         run: |
           SPACE="${{ steps.meta.outputs.space }}"
           VERSION="${{ steps.meta.outputs.version }}"
-          NAME="${{ steps.meta.outputs.name }}"
-          DESC="${{ steps.meta.outputs.description }}"
-          ICON="${{ steps.meta.outputs.icon }}"
-          SCOPE="${{ steps.meta.outputs.scope }}"
-          REPO="${{ steps.meta.outputs.repo }}"
           NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-          # Use node to safely update JSON
+          # Write per-space metadata file (conflict-free — each space writes its own file)
           node -e "
             const fs = require('fs');
-            const idx = JSON.parse(fs.readFileSync('index.json', 'utf8'));
-
-            idx.updated_at = '${NOW}';
-
-            const existing = idx.spaces.findIndex(s => s.id === '${SPACE}');
-            const entry = {
+            const meta = {
               id: '${SPACE}',
-              name: '${NAME}',
+              name: '${{ steps.meta.outputs.name }}',
               version: '${VERSION}',
-              description: '${DESC}',
-              icon: '${ICON}',
-              scope: '${SCOPE}',
-              repo: '${REPO}',
+              description: '${{ steps.meta.outputs.description }}',
+              icon: '${{ steps.meta.outputs.icon }}',
+              scope: '${{ steps.meta.outputs.scope }}',
+              repo: '${{ steps.meta.outputs.repo }}',
               tarball: 'spaces/${SPACE}/space-${SPACE}-v${VERSION}.tar.gz',
               released_at: '${NOW}'
             };
-
-            if (existing >= 0) {
-              idx.spaces[existing] = entry;
-            } else {
-              idx.spaces.push(entry);
-              idx.spaces.sort((a, b) => a.id.localeCompare(b.id));
-            }
-
-            fs.writeFileSync('index.json', JSON.stringify(idx, null, 2) + '\n');
+            fs.writeFileSync('spaces/${SPACE}/metadata.json', JSON.stringify(meta, null, 2) + '\n');
           "
 
-          cat index.json
-
-      - name: Commit and push
+      - name: Commit and push with index rebuild
         run: |
           SPACE="${{ steps.meta.outputs.space }}"
           VERSION="${{ steps.meta.outputs.version }}"
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add spaces/ index.json
-          git commit -m "release: ${SPACE} v${VERSION}"
 
-          # Retry push with rebase to handle concurrent collect runs
           for i in 1 2 3 4 5; do
-            git push && break
-            echo "Push failed, pulling with rebase and retrying ($i/5)..."
-            git pull --rebase
+            # Pull latest to get any changes from other collect runs
+            git pull --rebase=false 2>/dev/null || true
+
+            # Stage the new tarball and metadata (these are unique per space, no conflict)
+            git add "spaces/${SPACE}/"
+
+            # Rebuild index.json from ALL metadata files (always conflict-free)
+            node -e "
+              const fs = require('fs');
+              const path = require('path');
+              const spacesDir = 'spaces';
+              const spaces = [];
+
+              for (const name of fs.readdirSync(spacesDir).sort()) {
+                const metaFile = path.join(spacesDir, name, 'metadata.json');
+                if (fs.existsSync(metaFile)) {
+                  spaces.push(JSON.parse(fs.readFileSync(metaFile, 'utf8')));
+                }
+              }
+
+              const idx = {
+                version: 1,
+                updated_at: new Date().toISOString().replace(/\.\d+Z/, 'Z'),
+                spaces
+              };
+
+              fs.writeFileSync('index.json', JSON.stringify(idx, null, 2) + '\n');
+              console.log('Index rebuilt with ' + spaces.length + ' spaces');
+            "
+
+            git add index.json
+            git diff --cached --quiet && { echo "No changes to commit"; break; }
+            git commit -m "release: ${SPACE} v${VERSION}"
+
+            if git push; then
+              echo "Push succeeded"
+              break
+            fi
+
+            echo "Push failed ($i/5), resetting and retrying..."
+            git reset --soft HEAD~1
             sleep 2
           done
+
+          cat index.json

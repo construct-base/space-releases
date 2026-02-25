@@ -32,7 +32,7 @@ jobs:
 
       - name: Download tarball from source release
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.SPACE_RELEASES_TOKEN }}
         run: |
           SPACE="${{ steps.meta.outputs.space }}"
           VERSION="${{ steps.meta.outputs.version }}"

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-02-25T20:46:22Z",
+  "updated_at": "2026-02-25T20:46:43Z",
   "spaces": [
     {
       "id": "ai",
@@ -45,6 +45,17 @@
       "repo": "construct-base/space-design",
       "tarball": "spaces/design/space-design-v0.2.0.tar.gz",
       "released_at": "2026-02-25T20:44:04Z"
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "version": "0.2.0",
+      "description": "Git repository management",
+      "icon": "i-lucide-git-branch",
+      "scope": "both",
+      "repo": "construct-base/space-git",
+      "tarball": "spaces/git/space-git-v0.2.0.tar.gz",
+      "released_at": "2026-02-25T20:46:43Z"
     },
     {
       "id": "kanban",

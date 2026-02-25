@@ -1,0 +1,11 @@
+{
+  "id": "design",
+  "name": "Design",
+  "version": "0.2.0",
+  "description": "Visual design with PixiJS — Figma-like design tool",
+  "icon": "i-lucide-pen-tool",
+  "scope": "both",
+  "repo": "construct-base/space-design",
+  "tarball": "spaces/design/space-design-v0.2.0.tar.gz",
+  "released_at": "2026-02-25T20:44:04Z"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "kanban",
+  "name": "Tasks",
+  "version": "0.2.0",
+  "description": "Project management with boards, lists, and calendar",
+  "icon": "i-lucide-check-square",
+  "scope": "both",
+  "repo": "construct-base/space-kanban",
+  "tarball": "spaces/kanban/space-kanban-v0.2.0.tar.gz",
+  "released_at": "2026-02-25T20:44:22Z"
+}

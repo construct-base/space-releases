@@ -1,0 +1,11 @@
+{
+  "id": "architect",
+  "name": "Architect",
+  "version": "0.2.0",
+  "description": "AI-powered project architecture and blueprints",
+  "icon": "i-lucide-compass",
+  "scope": "both",
+  "repo": "construct-base/space-architect",
+  "tarball": "spaces/architect/space-architect-v0.2.0.tar.gz",
+  "released_at": "2026-02-25T20:43:45Z"
+}

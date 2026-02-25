@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-02-25T20:51:16Z",
+  "updated_at": "2026-02-25T20:51:29Z",
   "spaces": [
     {
       "id": "ai",
@@ -100,6 +100,17 @@
       "repo": "construct-base/space-kanban",
       "tarball": "spaces/kanban/space-kanban-v0.2.0.tar.gz",
       "released_at": "2026-02-25T20:44:22Z"
+    },
+    {
+      "id": "notes",
+      "name": "Notes",
+      "version": "0.2.0",
+      "description": "Sticky notes for quick reminders and shared info",
+      "icon": "i-lucide-sticky-note",
+      "scope": "both",
+      "repo": "construct-base/space-notes",
+      "tarball": "spaces/notes/space-notes-v0.2.0.tar.gz",
+      "released_at": "2026-02-25T20:51:27Z"
     },
     {
       "id": "terminal",

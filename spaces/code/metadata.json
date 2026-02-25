@@ -1,0 +1,11 @@
+{
+  "id": "code",
+  "name": "Code",
+  "version": "0.2.0",
+  "description": "Code editor with terminal and git",
+  "icon": "i-lucide-code",
+  "scope": "both",
+  "repo": "construct-base/space-code",
+  "tarball": "spaces/code/space-code-v0.2.0.tar.gz",
+  "released_at": "2026-02-25T20:51:15Z"
+}

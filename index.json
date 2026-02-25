@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-02-25T20:50:19Z",
+  "updated_at": "2026-02-25T20:51:16Z",
   "spaces": [
     {
       "id": "ai",
@@ -45,6 +45,17 @@
       "repo": "construct-base/space-chat",
       "tarball": "spaces/chat/space-chat-v0.2.0.tar.gz",
       "released_at": "2026-02-25T20:49:38Z"
+    },
+    {
+      "id": "code",
+      "name": "Code",
+      "version": "0.2.0",
+      "description": "Code editor with terminal and git",
+      "icon": "i-lucide-code",
+      "scope": "both",
+      "repo": "construct-base/space-code",
+      "tarball": "spaces/code/space-code-v0.2.0.tar.gz",
+      "released_at": "2026-02-25T20:51:15Z"
     },
     {
       "id": "design",

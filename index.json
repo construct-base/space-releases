@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-02-25T20:49:48Z",
+  "updated_at": "2026-02-25T20:50:19Z",
   "spaces": [
     {
       "id": "ai",
@@ -89,6 +89,17 @@
       "repo": "construct-base/space-kanban",
       "tarball": "spaces/kanban/space-kanban-v0.2.0.tar.gz",
       "released_at": "2026-02-25T20:44:22Z"
+    },
+    {
+      "id": "terminal",
+      "name": "Terminal",
+      "version": "0.2.0",
+      "description": "Terminal emulator",
+      "icon": "i-lucide-terminal",
+      "scope": "both",
+      "repo": "construct-base/space-terminal",
+      "tarball": "spaces/terminal/space-terminal-v0.2.0.tar.gz",
+      "released_at": "2026-02-25T20:50:09Z"
     }
   ]
 }

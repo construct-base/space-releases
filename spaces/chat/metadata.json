@@ -1,0 +1,11 @@
+{
+  "id": "chat",
+  "name": "Chat",
+  "version": "0.2.0",
+  "description": "Team chat with AI",
+  "icon": "i-lucide-messages-square",
+  "scope": "both",
+  "repo": "construct-base/space-chat",
+  "tarball": "spaces/chat/space-chat-v0.2.0.tar.gz",
+  "released_at": "2026-02-25T20:49:38Z"
+}

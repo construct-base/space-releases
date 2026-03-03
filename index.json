@@ -1,17 +1,17 @@
 {
   "version": 1,
-  "updated_at": "2026-03-03T15:02:26.996Z",
+  "updated_at": "2026-03-03T16:11:33.000Z",
   "spaces": [
     {
       "id": "ai",
       "name": "AI",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "AI-powered project assistant",
       "icon": "i-lucide-sparkles",
       "scope": "both",
       "repo": "construct-base/space-ai",
-      "tarball": "spaces/ai/space-ai-v0.2.0.tar.gz",
-      "released_at": "2026-03-03T15:02:11.595Z"
+      "tarball": "spaces/ai/space-ai-v0.2.1.tar.gz",
+      "released_at": "2026-03-03T16:11:33.000Z"
     },
     {
       "id": "architect",
@@ -38,24 +38,24 @@
     {
       "id": "chat",
       "name": "Chat",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Team chat with AI",
       "icon": "i-lucide-messages-square",
       "scope": "both",
       "repo": "construct-base/space-chat",
-      "tarball": "spaces/chat/space-chat-v0.2.0.tar.gz",
-      "released_at": "2026-03-03T15:02:11.893Z"
+      "tarball": "spaces/chat/space-chat-v0.2.1.tar.gz",
+      "released_at": "2026-03-03T16:11:33.000Z"
     },
     {
       "id": "code",
       "name": "Code",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "description": "Code editor with terminal and git",
       "icon": "i-lucide-code",
       "scope": "both",
       "repo": "construct-base/space-code",
-      "tarball": "spaces/code/space-code-v0.3.0.tar.gz",
-      "released_at": "2026-03-03T15:02:12.226Z"
+      "tarball": "spaces/code/space-code-v0.3.1.tar.gz",
+      "released_at": "2026-03-03T16:11:33.000Z"
     },
     {
       "id": "design",
@@ -82,13 +82,13 @@
     {
       "id": "git",
       "name": "Git",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Git repository management",
       "icon": "i-lucide-git-branch",
       "scope": "both",
       "repo": "construct-base/space-git",
-      "tarball": "spaces/git/space-git-v0.2.0.tar.gz",
-      "released_at": "2026-03-03T15:02:12.762Z"
+      "tarball": "spaces/git/space-git-v0.2.1.tar.gz",
+      "released_at": "2026-03-03T16:11:33.000Z"
     },
     {
       "id": "kanban",

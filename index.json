@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-02-25T20:51:29Z",
+  "updated_at": "2026-03-03T15:02:26.996Z",
   "spaces": [
     {
       "id": "ai",
@@ -11,7 +11,7 @@
       "scope": "both",
       "repo": "construct-base/space-ai",
       "tarball": "spaces/ai/space-ai-v0.2.0.tar.gz",
-      "released_at": "2026-02-25T20:42:40Z"
+      "released_at": "2026-03-03T15:02:11.595Z"
     },
     {
       "id": "architect",
@@ -22,7 +22,7 @@
       "scope": "both",
       "repo": "construct-base/space-architect",
       "tarball": "spaces/architect/space-architect-v0.2.0.tar.gz",
-      "released_at": "2026-02-25T20:43:45Z"
+      "released_at": "2026-03-03T15:02:11.694Z"
     },
     {
       "id": "calendar",
@@ -33,7 +33,7 @@
       "scope": "both",
       "repo": "construct-base/space-calendar",
       "tarball": "spaces/calendar/space-calendar-v0.2.0.tar.gz",
-      "released_at": "2026-02-25T20:46:22Z"
+      "released_at": "2026-03-03T15:02:11.794Z"
     },
     {
       "id": "chat",
@@ -44,29 +44,29 @@
       "scope": "both",
       "repo": "construct-base/space-chat",
       "tarball": "spaces/chat/space-chat-v0.2.0.tar.gz",
-      "released_at": "2026-02-25T20:49:38Z"
+      "released_at": "2026-03-03T15:02:11.893Z"
     },
     {
       "id": "code",
       "name": "Code",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "description": "Code editor with terminal and git",
       "icon": "i-lucide-code",
       "scope": "both",
       "repo": "construct-base/space-code",
-      "tarball": "spaces/code/space-code-v0.2.0.tar.gz",
-      "released_at": "2026-02-25T20:51:15Z"
+      "tarball": "spaces/code/space-code-v0.3.0.tar.gz",
+      "released_at": "2026-03-03T15:02:12.226Z"
     },
     {
       "id": "design",
       "name": "Design",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "description": "Visual design with PixiJS — Figma-like design tool",
       "icon": "i-lucide-pen-tool",
       "scope": "both",
       "repo": "construct-base/space-design",
-      "tarball": "spaces/design/space-design-v0.2.0.tar.gz",
-      "released_at": "2026-02-25T20:44:04Z"
+      "tarball": "spaces/design/space-design-v0.3.0.tar.gz",
+      "released_at": "2026-03-03T15:02:12.343Z"
     },
     {
       "id": "docs",
@@ -77,7 +77,7 @@
       "scope": "both",
       "repo": "construct-base/space-docs",
       "tarball": "spaces/docs/space-docs-v0.2.0.tar.gz",
-      "released_at": "2026-02-25T20:49:47Z"
+      "released_at": "2026-03-03T15:02:12.443Z"
     },
     {
       "id": "git",
@@ -88,7 +88,7 @@
       "scope": "both",
       "repo": "construct-base/space-git",
       "tarball": "spaces/git/space-git-v0.2.0.tar.gz",
-      "released_at": "2026-02-25T20:46:43Z"
+      "released_at": "2026-03-03T15:02:12.762Z"
     },
     {
       "id": "kanban",
@@ -99,7 +99,7 @@
       "scope": "both",
       "repo": "construct-base/space-kanban",
       "tarball": "spaces/kanban/space-kanban-v0.2.0.tar.gz",
-      "released_at": "2026-02-25T20:44:22Z"
+      "released_at": "2026-03-03T15:02:12.864Z"
     },
     {
       "id": "notes",
@@ -110,7 +110,7 @@
       "scope": "both",
       "repo": "construct-base/space-notes",
       "tarball": "spaces/notes/space-notes-v0.2.0.tar.gz",
-      "released_at": "2026-02-25T20:51:27Z"
+      "released_at": "2026-03-03T15:02:12.964Z"
     },
     {
       "id": "terminal",

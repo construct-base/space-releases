@@ -131,13 +131,13 @@
     {
       "id": "projects",
       "name": "Projects",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "description": "Projects space for Construct",
       "icon": "i-lucide-bandage",
       "scope": "both",
       "repo": "construct-space/space-projects",
-      "tarball": "https://github.com/construct-space/space-releases/releases/download/projects-v0.1.1/space-projects-v0.1.1.tar.gz",
-      "released_at": "2026-03-06T02:30:00.000Z"
+      "tarball": "https://github.com/construct-space/space-releases/releases/download/projects-v0.1.2/space-projects-v0.1.2.tar.gz",
+      "released_at": "2026-03-06T02:45:00.000Z"
     }
   ]
 }

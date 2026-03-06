@@ -17,13 +17,13 @@
     {
       "id": "architect",
       "name": "Architect",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "AI-powered project architecture and blueprints",
       "icon": "i-lucide-compass",
       "scope": "both",
-      "repo": "construct-base/space-architect",
-      "tarball": "https://github.com/construct-space/space-releases/releases/download/architect-v0.2.0/space-architect-v0.2.0.tar.gz",
-      "released_at": "2026-03-03T15:02:11.694Z"
+      "repo": "construct-space/space-architect",
+      "tarball": "https://github.com/construct-space/space-releases/releases/download/architect-v0.2.1/space-architect-v0.2.1.tar.gz",
+      "released_at": "2026-03-06T14:00:00.000Z"
     },
     {
       "id": "calendar",
